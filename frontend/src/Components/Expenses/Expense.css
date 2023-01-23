@@ -1,0 +1,14 @@
+.more-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.desc-info {
+    margin-top: 30px;
+}
+.desc-button {
+    margin-left: 20px;
+}
+.test {
+    margin-left: 20px;
+}

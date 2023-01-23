@@ -1,0 +1,17 @@
+.resNo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.users{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+.expenses {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
