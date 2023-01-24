@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Button, ButtonGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 import './Expense.css';
 
 const Expense = ({expense}) => {
     const [showMore, setShowMore] = useState(false);
 
     const handleDelete = (id) => {
-        fetch(`/expense/${id}`, {
-            method: 'DELETE'
+        const data = localStorage.getItem('token');
+        const decoded = jwt_decode(data);
+        const userEmail = decoded.sub;
+        console.log(userEmail);
+
+
+        fetch(`/expense/user/${id}`, {
+            method: 'DELETE',
+            body: JSON.stringify({email : userEmail}),
+            headers: { 'Content-Type': 'application/json' },
         })
         .then(response => response.json())
         .then(data => {

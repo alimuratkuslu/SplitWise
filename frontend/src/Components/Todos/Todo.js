@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Button, ButtonGroup } from 'reactstrap';
+import jwt_decode from 'jwt-decode';
+import { Link } from 'react-router-dom';
 import './Todo.css';
 
 const Todo = ({todo}) => {
@@ -21,6 +24,27 @@ const Todo = ({todo}) => {
           console.error(err);
         }
       };
+
+      const handleDelete = (id) => {
+        const data = localStorage.getItem('token');
+        const decoded = jwt_decode(data);
+        const userEmail = decoded.sub;
+        console.log(userEmail);
+
+
+        fetch(`/todo/user/${id}`, {
+            method: 'DELETE',
+            body: JSON.stringify({email : userEmail}),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
     
     return (
         <div className='more-info'>
@@ -39,6 +63,12 @@ const Todo = ({todo}) => {
                         onClick={handleCheckboxClick}
                     />
                     <span>Done</span>
+                    <td>
+                    <ButtonGroup>
+                        <Button size="sm" color="primary" tag={Link} to={"/todo/" + todo.id}>Edit</Button>
+                        <Button size="sm" color="danger" onClick={() => handleDelete(todo.id)}>Delete</Button>
+                    </ButtonGroup>
+                    </td>
                     <br />
                     <br />
                 </div>

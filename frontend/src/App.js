@@ -27,7 +27,6 @@ function App() {
           <PrivateRoute exact path='/todo/:id' component={TodoEdit} />
           <PrivateRoute exact path='/house' component={HouseList} />
           <PrivateRoute exact path='/profile' component={Profile} />
-          <Route exact path='/logout' component={Logout} />
           <Redirect to='/auth/login' />
       </Switch>
     </Router>

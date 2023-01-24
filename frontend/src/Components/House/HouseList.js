@@ -3,13 +3,14 @@ import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import jwt_decode from 'jwt-decode';
 import './HouseList.css';
+import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 
 const HouseList = () => {
 
     const [user, setUser] = useState({});
     const [residentNo, setResidentNo] = useState({});
     const [houseUsers, setHouseUsers] = useState({});
-    const [expenses, setExpenses] = useState({});
+    const [expenses, setExpenses] = useState([]);
     const [loading, setLoading] = useState(true);
 
 
@@ -31,12 +32,24 @@ const HouseList = () => {
 
               axios.get(`/house/summary/${response.data.id}`)
               .then(response => {
-                console.log(response.data); 
-                setExpenses(response.data);
+                console.log(response.data);
+                const keys = Object.keys(response.data);
+                const values = Object.values(response.data);
+
+                const data = [
+                  { name: keys[0], value: values[0]},
+                  { name: keys[1], value: values[1]},
+                  { name: keys[2], value: values[2]},
+                  { name: keys[3], value: values[3]},
+                ];
+
+                setExpenses(data);
+                console.log(expenses); 
               })
               .catch(error => {
                 console.log(error);
               });
+              
               setLoading(false);
             })
             .catch(error => {
@@ -55,6 +68,21 @@ const HouseList = () => {
             <Navbar />
             <br />
             <br />
+            <div className='piechart'>
+            <PieChart width={400} height={400}>
+              <Pie
+                dataKey="value"
+                isAnimationActive={false}
+                data={expenses}
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                fill="#8884d8"
+                label
+              />
+              <Tooltip />
+            </PieChart>
+            </div>
             <div className='resNo'>
               <h2>Resident Number: {residentNo}</h2>
             </div>
@@ -91,9 +119,3 @@ const HouseList = () => {
 }
 
 export default HouseList;
-
-/*
-<div>
-            <Pie data={chartData} />
-            </div>
-*/

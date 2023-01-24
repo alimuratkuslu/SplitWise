@@ -1,0 +1,29 @@
+.filter {
+    position: absolute;
+    top: 2;
+    left: 0;
+}
+.table {
+    margin: 0 auto; 
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+    margin-left: 40px;
+    margin-right:auto;
+}
+.form {
+    background-color: white;
+    width: 300px;
+    height: 100px;
+}
+.type {
+    margin-top: 40px;
+    background-color: white;
+    width: 300px;
+    height: 100px;
+}
+
+/*
+display: flex;
+    justify-content: center;
+    align-items: center;
+*/

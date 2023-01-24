@@ -13,7 +13,7 @@ const ExpenseEdit = () => {
     const [amount, setAmount] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
-    const [type, setType] = useState('');
+    const [expenseType, setExpenseType] = useState('');
 
     useEffect(() => {
         const data = localStorage.getItem('token');
@@ -55,7 +55,7 @@ const ExpenseEdit = () => {
           const response = await fetch('/expense', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ amount: amount, description: description, date: date, expenseType: type }),
+            body: JSON.stringify({ amount: amount, description: description, date: date, expenseType: expenseType }),
           });
 
           const data = await response.json();
@@ -63,7 +63,6 @@ const ExpenseEdit = () => {
           setAmount('');
           setDescription('');
           setDate('');
-          setType('');
 
           const saveToUser = await fetch(`/expense/${data.id}`, {
             method: 'POST',
@@ -77,6 +76,10 @@ const ExpenseEdit = () => {
         } catch (err) {
           console.error(err);
         }
+    };
+
+    const handleExpenseTypeChange = event => {
+      setExpenseType(event.target.value);
     };
 
     return (
@@ -107,19 +110,21 @@ const ExpenseEdit = () => {
             />
             <br />
             <br />
-            <input
-                type="text"
-                placeholder="Type"
-                value={type}
-                // Add dropdown for Expense Types
-                onChange={(e) => setType(e.target.value)}
-            />
+            <label>
+              Expense Type:
+              <select value={expenseType} onChange={handleExpenseTypeChange}>
+                <option value="RENT">RENT</option>
+                <option value="BILL">BILL</option>
+                <option value="GROCERY">GROCERY</option>
+                <option value="MISCELLANEOUS">MISCELLANEOUS</option>
+              </select>
+            </label>
+            
             <button type="submit">Add</button>
             </form>
         </div>
       );
-
-    
 }
 
 export default withRouter(ExpenseEdit);
+

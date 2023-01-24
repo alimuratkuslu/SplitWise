@@ -181,6 +181,37 @@ public class ExpenseService {
                 .build();
     }
 
+    public List<Expense> filterExpenseByDate(LocalDate date, String email){
+        User user = userRepository.findByEmail(email);
+
+        List<Expense> currentExpenses = user.getExpenses();
+
+        List<Expense> expenseList = new ArrayList<>();
+
+        for (int i = 0; i < currentExpenses.size(); i++) {
+            if(currentExpenses.get(i).getDate().equals(date)){
+                expenseList.add(currentExpenses.get(i));
+            }
+        }
+        return expenseList;
+    }
+
+    public List<Expense> filterExpenseByType(ExpenseType type, String email){
+        User user = userRepository.findByEmail(email);
+
+        List<Expense> currentExpenses = user.getExpenses();
+
+        List<Expense> expenseList = new ArrayList<>();
+
+        for (int i = 0; i < currentExpenses.size(); i++) {
+            if(currentExpenses.get(i).getExpenseType().equals(type)){
+                expenseList.add(currentExpenses.get(i));
+            }
+        }
+
+        return expenseList;
+    }
+
     public void divideExpenses(Integer houseId){
 
         House house = houseRepository.findById(houseId).orElseThrow(RuntimeException::new);

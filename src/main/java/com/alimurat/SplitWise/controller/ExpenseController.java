@@ -2,10 +2,12 @@ package com.alimurat.SplitWise.controller;
 
 import com.alimurat.SplitWise.dto.*;
 import com.alimurat.SplitWise.model.Expense;
+import com.alimurat.SplitWise.model.ExpenseType;
 import com.alimurat.SplitWise.service.ExpenseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -57,6 +59,16 @@ public class ExpenseController {
     @DeleteMapping("/{id}")
     public void deleteExpenseById(@PathVariable Integer id){
         expenseService.deleteExpenseById(id);
+    }
+
+    @PostMapping("/filter/date/{date}")
+    public ResponseEntity<List<Expense>> filterExpenseByDate(@PathVariable LocalDate date, @RequestBody AddExpenseToUserDto request){
+        return ResponseEntity.ok(expenseService.filterExpenseByDate(date, request.getEmail()));
+    }
+
+    @PostMapping("/filter/type/{type}")
+    public ResponseEntity<List<Expense>> filterExpenseByType(@PathVariable ExpenseType type, @RequestBody AddExpenseToUserDto request){
+        return ResponseEntity.ok(expenseService.filterExpenseByType(type, request.getEmail()));
     }
 
     @GetMapping("/summary")

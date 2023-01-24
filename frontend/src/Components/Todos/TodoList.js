@@ -33,7 +33,7 @@ const TodoList = () => {
             });
         }
     }, []);
-
+    
     if (loading) {
       return <p>Loading...</p>
     }
@@ -44,7 +44,7 @@ const TodoList = () => {
             <br />
             <br />
             <div className="float-right">
-                <Button color="success" tag={Link} to="/user/save">Add Todo</Button>
+                <Button color="success" tag={Link} to="/todo/save">Add Todo</Button>
             </div>
             {todos.map(todo => (
                 <Todo key={todo.id} todo={todo} />
